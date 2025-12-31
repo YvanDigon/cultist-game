@@ -5,6 +5,7 @@ import { globalStore } from '@/state/stores/global-store';
 import { useSnapshot } from '@kokimoki/app';
 import * as React from 'react';
 import Markdown from 'react-markdown';
+import nightVillageImg from '/nightVillage.jpg';
 
 export const RoleRevealView: React.FC = () => {
 	const { players, roundNumber } = useSnapshot(globalStore.proxy);
@@ -78,7 +79,7 @@ export const RoleRevealView: React.FC = () => {
 			{isRestart && (
 				<div className="rounded-2xl overflow-hidden border border-cult-red/30">
 					<img 
-						src="nightVillage.jpg" 
+						src={nightVillageImg} 
 						alt="Night Village" 
 						className="w-full h-48 object-cover"
 					/>

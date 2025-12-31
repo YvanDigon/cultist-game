@@ -10,6 +10,10 @@ import { ConnectionsView } from '@/views/connections-view';
 import { useSnapshot } from '@kokimoki/app';
 import { KmQrCode } from '@kokimoki/shared';
 import * as React from 'react';
+import cultistsVictoryImg from '/cultistsVictory.jpg';
+import villagersVictoryImg from '/villagersVictory.jpg';
+import nightVillageImg from '/nightVillage.jpg';
+import dayVillageImg from '/dayVillage.jpg';
 
 const App: React.FC = () => {
 	const { title } = config;
@@ -100,7 +104,7 @@ const App: React.FC = () => {
 									{/* Background Image with Gradient Overlay */}
 									<div className="relative h-64 rounded-2xl overflow-hidden">
 										<img 
-											src={globalStore.proxy.winner === 'cultists' ? '/cultistsVictory.jpg' : '/villagersVictory.jpg'}
+											src={globalStore.proxy.winner === 'cultists' ? cultistsVictoryImg : villagersVictoryImg}
 											alt={globalStore.proxy.winner === 'cultists' ? 'Cultists Victory' : 'Villagers Victory'}
 											className="w-full h-full object-cover opacity-50"
 										/>
@@ -174,7 +178,7 @@ const App: React.FC = () => {
 							{/* Background Image with Gradient Overlay */}
 							<div className="relative h-64 rounded-2xl overflow-hidden">
 								<img 
-								src="nightVillage.jpg" 
+							src={nightVillageImg} 
 									alt="Night Village" 
 									className="w-full h-full object-cover opacity-40"
 								/>
@@ -239,7 +243,7 @@ const App: React.FC = () => {
 							{/* Background Image with Gradient Overlay */}
 							<div className="relative h-64 rounded-2xl overflow-hidden">
 								<img 
-								src="dayVillage.jpg" 
+								src={dayVillageImg} 
 									alt="Day Village" 
 									className="w-full h-full object-cover opacity-50"
 								/>

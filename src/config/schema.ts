@@ -63,6 +63,7 @@ export const schema = z.object({
 	lastDayExecution: z.string().default('Yesterday, {name} was executed. They were a {role}.'),
 	lastDayExecutionTie: z.string().default('Yesterday ended in a tie. Nobody was executed.'),
 	lastDayIdiotRevealed: z.string().default('Yesterday, the village tried to execute {name}, but they are the Village Idiot and survived!'),
+	idiotRevealedCurrentDay: z.string().default('{name} is the Village Idiot! They cannot be executed and will survive.'),
 	noExecutionYesterday: z.string().default('Nobody was executed yesterday.'),
 	
 	// Game Over

@@ -23,7 +23,9 @@ const App: React.FC = () => {
 		nightVotes,
 		nightVotesValidated,
 		dayVotes,
-		winner
+		winner,
+		hunterEliminatedId,
+		hunterTargetChoice
 	} = useSnapshot(globalStore.proxy);
 	const [buttonCooldown, setButtonCooldown] = React.useState(true);
 	const playersWithStatus = usePlayersWithStatus();
@@ -60,6 +62,9 @@ const App: React.FC = () => {
 	const cullistsDecided = uniqueTargets.size === 1 && cultistVotes.length > 0;
 
 	const allDayVotesValidated = dayVotes.length > 0 && dayVotes.every(v => v.validated);
+	
+	// Check if hunter was eliminated and hasn't made their choice yet
+	const hunterNeedsToChoose = hunterEliminatedId !== null && hunterTargetChoice === null;
 
 	const getRoleEmoji = (role?: string) => {
 		switch (role) {
@@ -190,13 +195,19 @@ const App: React.FC = () => {
 											<p className="font-semibold text-slate-100">Day Votes: {dayVotes.length}</p>
 										<p className="text-sm">Validated: {dayVotes.filter(v => v.validated).length}</p>
 									</div>
+					
+					{hunterNeedsToChoose && (
+						<div className="rounded-lg bg-yellow-100 p-3 text-yellow-900">
+							<p className="font-semibold">⚠️ Waiting for Hunter to choose their target</p>
+						</div>
+					)}
 
-									<div className="flex gap-2">
-										<button
-											type="button"
-												className="flex-1 inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-blue-600 not-disabled:text-white not-disabled:hover:bg-blue-700"
-												onClick={globalActions.validateAllDayVotes}
-												disabled={allDayVotesValidated}
+					<div className="flex gap-2">
+						<button
+							type="button"
+								className="flex-1 inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-blue-600 not-disabled:text-white not-disabled:hover:bg-blue-700"
+								onClick={globalActions.validateAllDayVotes}
+								disabled={allDayVotesValidated}
 											>
 												{config.validateAllVotesButton}
 											</button>
@@ -204,7 +215,7 @@ const App: React.FC = () => {
 												type="button"
 												className="flex-1 inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-green-600 not-disabled:text-white not-disabled:hover:bg-green-700"
 											onClick={globalActions.startNightPhase}
-											disabled={!allDayVotesValidated}
+											disabled={!allDayVotesValidated || hunterNeedsToChoose}
 										>
 											{config.startNightPhaseButton}
 										</button>

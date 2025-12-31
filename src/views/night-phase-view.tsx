@@ -200,6 +200,21 @@ export const NightPhaseView: React.FC = () => {
 		);
 	}
 
+	// Dead cultist view
+	if (myRole === 'cultist' && !isAlive) {
+		return (
+			<div className="w-full space-y-6 text-center">
+				<h1 className="text-3xl font-bold text-slate-100">{config.nightPhaseTitle}</h1>
+				<div className="rounded-2xl bg-cult-blue border border-cult-red/30 p-8 text-slate-50">
+					<p className="text-xl">{config.youAreDead}</p>
+				</div>
+				<div className="rounded-2xl bg-red-900/80 border border-red-500 p-6 text-red-50">
+					<p className="text-lg">{config.deadPlayerMessage}</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="w-full space-y-6">
 			<h1 className="text-center text-3xl font-bold text-slate-100">{config.nightPhaseTitle}</h1>

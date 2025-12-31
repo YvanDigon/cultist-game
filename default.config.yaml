@@ -92,6 +92,7 @@ deadPlayerMessage: 'You can''t talk to other players. Please wait until the end 
 lastDayExecution: 'Yesterday, **{name}** was executed. They were a **{role}**.'
 lastDayExecutionTie: 'Yesterday ended in a tie. Nobody was executed.'
 lastDayIdiotRevealed: 'Yesterday, the village tried to execute **{name}**, but they are the **Village Idiot** and survived!'
+idiotRevealedCurrentDay: '**{name}** is the **Village Idiot**! They cannot be executed and will survive.'
 noExecutionYesterday: 'Nobody was executed yesterday.'
 
 # Game Over

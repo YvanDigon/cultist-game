@@ -1,6 +1,7 @@
 import { config } from '@/config';
 import * as React from 'react';
 import Markdown from 'react-markdown';
+import dayVillageImg from '/dayVillage.jpg';
 
 export const WaitingForGameView: React.FC = () => {
 	return (
@@ -8,7 +9,7 @@ export const WaitingForGameView: React.FC = () => {
 			{/* Background Image */}
 			<div className="relative h-64 rounded-2xl overflow-hidden">
 				<img 
-					src="dayVillage.jpg" 
+					src={dayVillageImg} 
 					alt="Village" 
 					className="w-full h-full object-cover opacity-60"
 				/>

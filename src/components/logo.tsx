@@ -1,6 +1,7 @@
 import { config } from '@/config';
 import { cn } from '@/utils/cn';
 import * as React from 'react';
+import logoImg from '/logo.svg';
 
 /**
  * Logo example using an image assets
@@ -10,7 +11,7 @@ import * as React from 'react';
  */
 export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 	<img
-		src="logo.svg"
+		src={logoImg}
 		alt={config.title}
 		title={config.title}
 		className={cn('h-9', className)}

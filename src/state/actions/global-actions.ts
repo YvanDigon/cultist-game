@@ -340,7 +340,9 @@ export const globalActions = {
 					// Check if executed player was a hunter
 					if (target.role === 'hunter') {
 						globalState.hunterEliminatedId = executionTargetId;
-						globalState.hunterTargetChoice = null; // Reset choice for new hunter
+						globalState.hunterTargetChoice = null;
+						// Don't transition to night yet - wait for hunter choice
+						return;
 					}
 				}
 			} else {

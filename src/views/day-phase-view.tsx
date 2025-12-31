@@ -23,6 +23,9 @@ export const DayPhaseView: React.FC = () => {
 	const isAlive = myPlayer?.isAlive ?? false;
 	const myVote = dayVotes.find(v => v.voterId === kmClient.id);
 
+	// Check if all votes have been validated by the host
+	const allVotesValidated = dayVotes.length > 0 && dayVotes.every(v => v.validated);
+
 	// Check if this player is the hunter who was just eliminated
 	const isEliminatedHunter = hunterEliminatedId === kmClient.id && myRole === 'hunter' && !isAlive;
 
@@ -157,6 +160,15 @@ export const DayPhaseView: React.FC = () => {
 				</div>
 			)}
 
+			{/* Current day idiot reveal message */}
+			{idiotRevealed && lastExecutionAttemptedId && !lastExecutedId && players[lastExecutionAttemptedId] && (
+				<div className="rounded-xl bg-yellow-900 border border-yellow-500 p-4 text-yellow-100">
+					<p className="text-center font-semibold">
+						{config.idiotRevealedCurrentDay.replace('{name}', players[lastExecutionAttemptedId].name)}
+					</p>
+				</div>
+			)}
+
 			<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-4 text-slate-50">
 				<p className="text-center font-semibold">{config.voteToExecute}</p>
 			</div>
@@ -172,6 +184,7 @@ export const DayPhaseView: React.FC = () => {
 								: 'bg-cult-red/80 text-slate-100 border-cult-red hover:bg-cult-red-bright'
 						}`}
 						onClick={() => handleVote(id)}
+						disabled={allVotesValidated}
 					>
 						<div className="flex items-center justify-between">
 							<span className="font-medium">{player.name}</span>

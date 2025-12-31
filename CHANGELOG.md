@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2025-12-31
+
+### Added
+- Hunter choice menu now appears when hunter is executed during day phase
+- Visual indicator on host screen when waiting for hunter to make their choice
+
+### Changed
+- Players can no longer change their votes after host validates all day votes
+- Host cannot transition to night phase until hunter makes their elimination choice (when hunter is executed)
+
+### Fixed
+- Dead cultists can no longer vote during night phase sacrifice
+
 ## [0.1.1] - 2025-12-31
 
 ### Added
@@ -19,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Execution voting interface now shows voting options before results (player view)
 - Execution result preview now appears above player list (presenter view)
 - Players can no longer vote for themselves during day phase execution
-- Image paths fixed for production deployment (removed leading slashes)
+- Images converted to Vite module imports for proper production deployment (instead of direct path references)
 
 ### Fixed
 - Dead player message no longer appears during game over screen
