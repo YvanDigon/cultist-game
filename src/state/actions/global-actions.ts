@@ -1,6 +1,5 @@
 import { kmClient } from '@/services/km-client';
 import { globalStore, type Role } from '../stores/global-store';
-import { playerStore } from '../stores/player-store';
 import { config } from '@/config';
 
 // Helper function to assign roles based on player count
