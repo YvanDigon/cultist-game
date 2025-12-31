@@ -8,7 +8,7 @@ export const WaitingForGameView: React.FC = () => {
 			{/* Background Image */}
 			<div className="relative h-64 rounded-2xl overflow-hidden">
 				<img 
-					src="/dayVillage.jpg" 
+					src="dayVillage.jpg" 
 					alt="Village" 
 					className="w-full h-full object-cover opacity-60"
 				/>

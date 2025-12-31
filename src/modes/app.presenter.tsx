@@ -19,8 +19,6 @@ const App: React.FC = () => {
 		players,
 		dayVotes,
 		lastSacrificeTargetId,
-		lastExecutedId,
-		lastExecutionAttemptedId,
 		roundNumber
 	} = useSnapshot(globalStore.proxy);
 
@@ -131,7 +129,7 @@ const App: React.FC = () => {
 							{/* Show all players and their roles */}
 							<div className="mt-12">
 								<h2 className="text-3xl font-bold text-slate-100 mb-6">{config.allPlayerRoles}</h2>
-								<div className="grid gap-4 max-w-3xl mx-auto">
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
 									{allPlayersWithRoles.map(([id, player]) => (
 										<div 
 											key={id} 
@@ -176,7 +174,7 @@ const App: React.FC = () => {
 							{/* Background Image with Gradient Overlay */}
 							<div className="relative h-64 rounded-2xl overflow-hidden">
 								<img 
-									src="/nightVillage.jpg" 
+								src="nightVillage.jpg" 
 									alt="Night Village" 
 									className="w-full h-full object-cover opacity-40"
 								/>
@@ -241,7 +239,7 @@ const App: React.FC = () => {
 							{/* Background Image with Gradient Overlay */}
 							<div className="relative h-64 rounded-2xl overflow-hidden">
 								<img 
-									src="/dayVillage.jpg" 
+								src="dayVillage.jpg" 
 									alt="Day Village" 
 									className="w-full h-full object-cover opacity-50"
 								/>
@@ -274,8 +272,63 @@ const App: React.FC = () => {
 						{/* Public Voting Block */}
 						<div className="space-y-6">
 							<h2 className="text-5xl font-semibold text-slate-100 text-center tracking-wide" style={{ fontFamily: 'serif' }}>Public Voting</h2>
+							
+							{/* Execution Result Preview (after votes validated) */}
+							{dayVotes.length > 0 && dayVotes.every(v => v.validated) && (() => {
+								// Calculate who would be executed
+								const validatedVoteCounts: Record<string, number> = {};
+								dayVotes.forEach((vote) => {
+									validatedVoteCounts[vote.targetId] = (validatedVoteCounts[vote.targetId] || 0) + 1;
+								});
+
+								let maxVotes = 0;
+								let executionTargetId: string | null = null;
+								const tieCandidates: string[] = [];
+
+								Object.entries(validatedVoteCounts).forEach(([targetId, count]) => {
+									if (count > maxVotes) {
+										maxVotes = count;
+										executionTargetId = targetId;
+										tieCandidates.length = 0;
+										tieCandidates.push(targetId);
+									} else if (count === maxVotes && count > 0) {
+										tieCandidates.push(targetId);
+									}
+								});
+
+								const isTie = tieCandidates.length > 1;
+								const targetPlayer = executionTargetId ? players[executionTargetId] : null;
+
+								return (
+									<div className="bg-cult-blue/60 backdrop-blur-sm rounded-2xl p-6 border border-cult-red/40 shadow-lg shadow-cult-red/20">
+										{isTie ? (
+											<p className="text-3xl text-center text-slate-200">
+												The votes are tied. No one will be executed.
+											</p>
+										) : targetPlayer ? (
+											<>
+												<p className="text-3xl text-center text-slate-200">
+													The village has decided:{' '}
+													<span className="font-bold text-cult-red-bright drop-shadow-[0_0_8px_rgba(220,38,38,0.6)] animate-pulse">
+														{targetPlayer.name}
+													</span>
+													{targetPlayer.role === 'idiot' ? ' will be revealed as the Village Idiot!' : ' will be executed'}
+												</p>
+												<p className="text-xl text-center text-slate-400 mt-2">
+													{getRoleName(targetPlayer.role)}
+												</p>
+											</>
+										) : (
+											<p className="text-3xl text-center text-slate-200">
+												No votes were cast.
+											</p>
+										)}
+									</div>
+								);
+							})()}
+							
 							{sortedVotes.length > 0 ? (
-								<div className="space-y-4">
+								<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 									{sortedVotes.map((vote, index) => {
 										const isLeading = index === 0 && vote.count > 0;
 										return (
@@ -310,75 +363,6 @@ const App: React.FC = () => {
 								<p className="text-3xl text-slate-400 text-center py-8">No votes yet...</p>
 							)}
 						</div>
-					{/* Execution Result Preview (after votes validated) */}
-					{dayVotes.length > 0 && dayVotes.every(v => v.validated) && (() => {
-						// Calculate who would be executed
-						const validatedVoteCounts: Record<string, number> = {};
-						dayVotes.forEach((vote) => {
-							validatedVoteCounts[vote.targetId] = (validatedVoteCounts[vote.targetId] || 0) + 1;
-						});
-
-						let maxVotes = 0;
-						let executionTargetId: string | null = null;
-						const tieCandidates: string[] = [];
-
-						Object.entries(validatedVoteCounts).forEach(([targetId, count]) => {
-							if (count > maxVotes) {
-								maxVotes = count;
-								executionTargetId = targetId;
-								tieCandidates.length = 0;
-								tieCandidates.push(targetId);
-							} else if (count === maxVotes && count > 0) {
-								tieCandidates.push(targetId);
-							}
-						});
-
-						const isTie = tieCandidates.length > 1;
-						const targetPlayer = executionTargetId ? players[executionTargetId] : null;
-
-						return (
-							<div className="bg-cult-blue/60 backdrop-blur-sm rounded-2xl p-6 border border-cult-red/40 shadow-lg shadow-cult-red/20">
-								{isTie ? (
-									<p className="text-3xl text-center text-slate-200">
-										The votes are tied. No one will be executed.
-									</p>
-								) : targetPlayer ? (
-									<>
-										<p className="text-3xl text-center text-slate-200">
-											The village has decided:{' '}
-											<span className="font-bold text-cult-red-bright drop-shadow-[0_0_8px_rgba(220,38,38,0.6)] animate-pulse">
-												{targetPlayer.name}
-											</span>
-											{targetPlayer.role === 'idiot' ? ' will be revealed as the Village Idiot!' : ' will be executed'}
-										</p>
-										<p className="text-xl text-center text-slate-400 mt-2">
-											{getRoleName(targetPlayer.role)}
-										</p>
-									</>
-								) : (
-									<p className="text-3xl text-center text-slate-200">
-										No votes were cast.
-									</p>
-								)}
-							</div>
-						);
-					})()}
-						{/* Execution Result */}
-						{lastExecutionAttemptedId && roundNumber > 1 && (
-							<div className="bg-cult-blue/60 backdrop-blur-sm rounded-2xl p-6 border border-cult-red/40 text-center">
-								{lastExecutionAttemptedId === 'tie' ? (
-									<p className="text-3xl text-slate-200">{config.lastDayExecutionTie}</p>
-								) : lastExecutedId && players[lastExecutedId] ? (
-									<p className="text-3xl text-slate-200">
-										<span className="font-bold text-cult-red-bright">{players[lastExecutedId].name}</span> was executed
-									</p>
-								) : lastExecutionAttemptedId && !lastExecutedId && players[lastExecutionAttemptedId] ? (
-									<p className="text-3xl text-slate-200">
-										The village tried to execute <span className="font-bold text-cult-red-bright">{players[lastExecutionAttemptedId].name}</span>, but they survived!
-									</p>
-								) : null}
-							</div>
-						)}
 
 						{/* Eliminated Players Block */}
 						{eliminatedPlayers.length > 0 && (

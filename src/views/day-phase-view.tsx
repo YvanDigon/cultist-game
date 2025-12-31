@@ -157,13 +157,6 @@ export const DayPhaseView: React.FC = () => {
 				</div>
 			)}
 
-			{myVote && (
-				<div className="rounded-xl p-4 bg-green-900 text-green-100 border border-green-700">
-					<p className="font-semibold">✓ {config.voteRecorded}</p>
-					<p className="text-sm">{players[myVote.targetId]?.name}</p>
-				</div>
-			)}
-
 			<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-4 text-slate-50">
 				<p className="text-center font-semibold">{config.voteToExecute}</p>
 			</div>
@@ -189,6 +182,13 @@ export const DayPhaseView: React.FC = () => {
 					</button>
 				))}
 			</div>
+
+			{myVote && (
+				<div className="rounded-xl p-4 bg-green-900 text-green-100 border border-green-700">
+					<p className="font-semibold">✓ {config.voteRecorded}</p>
+					<p className="text-sm">{players[myVote.targetId]?.name}</p>
+				</div>
+			)}
 		</div>
 	);
 };

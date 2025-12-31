@@ -78,7 +78,7 @@ export const RoleRevealView: React.FC = () => {
 			{isRestart && (
 				<div className="rounded-2xl overflow-hidden border border-cult-red/30">
 					<img 
-						src="/nightVillage.jpg" 
+						src="nightVillage.jpg" 
 						alt="Night Village" 
 						className="w-full h-48 object-cover"
 					/>

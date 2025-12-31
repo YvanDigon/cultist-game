@@ -246,26 +246,36 @@ export const NightPhaseView: React.FC = () => {
 			)}
 
 			<div className="space-y-2">
-				{alivePlayers.map(([id, player]) => (
-					<button
-						key={id}
-						type="button"
-						className={`w-full rounded-xl p-4 text-left transition-colors border ${
-							myVote === id
-								? 'bg-cult-red-bright text-white border-cult-red shadow-lg'
-								: 'bg-cult-red/80 text-slate-100 border-cult-red hover:bg-cult-red-bright'
-						}`}
-						onClick={() => handleVote(id)}
-						disabled={nightVotesValidated}
-					>
-						<div className="flex items-center justify-between">
-							<span className="font-medium">{player.name}</span>
-							{myVote === id && (
-								<span className="text-sm">✓</span>
-							)}
-						</div>
-					</button>
-				))}
+				{alivePlayers.map(([id, player]) => {
+					// Count how many cultists voted for this player
+					const votesForThisPlayer = Object.values(nightVotes).filter(targetId => targetId === id).length;
+					
+					return (
+						<button
+							key={id}
+							type="button"
+							className={`w-full rounded-xl p-4 text-left transition-colors border ${
+								myVote === id
+									? 'bg-cult-red-bright text-white border-cult-red shadow-lg'
+									: 'bg-cult-red/80 text-slate-100 border-cult-red hover:bg-cult-red-bright'
+							}`}
+							onClick={() => handleVote(id)}
+							disabled={nightVotesValidated}
+						>
+							<div className="flex items-center justify-between">
+								<span className="font-medium">{player.name}</span>
+								<div className="flex items-center gap-2">
+									{votesForThisPlayer > 0 && !nightVotesValidated && (
+										<span className="text-sm">🗳️ {votesForThisPlayer}</span>
+									)}
+									{myVote === id && (
+										<span className="text-sm">✓</span>
+									)}
+								</div>
+							</div>
+						</button>
+					);
+				})}
 			</div>
 		</div>
 	);

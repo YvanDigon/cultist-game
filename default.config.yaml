@@ -99,8 +99,9 @@ gameOverTitle: 'Game Over'
 cultistsWin: 'The Cultists Win!'
 villagersWin: 'The Villagers Win!'
 theCultistsWere: 'The cultists were:'
+awaitingNewRitual: 'Awaiting the host to begin a new game...'
 
-# Cultist thresholds
+# Cultist thresholds - determine number of cultists based on player count
 oneCultistsMaxPlayers: 7    # Up to 7 players = 1 cultist
 twoCultistsMaxPlayers: 11   # 8-11 players = 2 cultists
 threeCultistsMaxPlayers: 18 # 12-18 players = 3 cultists, 19+ players = 4 cultists

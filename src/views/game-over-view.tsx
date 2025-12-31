@@ -47,7 +47,7 @@ export const GameOverView: React.FC = () => {
 			</div>
 
 			<div className="rounded-xl bg-cult-blue/60 border border-cult-red/30 p-4">
-				<p className="text-lg text-slate-300">Awaiting the host to begin a new ritual...</p>
+				<p className="text-lg text-slate-300">{config.awaitingNewRitual}</p>
 			</div>
 		</div>
 	);

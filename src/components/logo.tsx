@@ -10,7 +10,7 @@ import * as React from 'react';
  */
 export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 	<img
-		src="/logo.svg"
+		src="logo.svg"
 		alt={config.title}
 		title={config.title}
 		className={cn('h-9', className)}

@@ -69,8 +69,7 @@ export const schema = z.object({
 	gameOverTitle: z.string().default('Game Over'),
 	cultistsWin: z.string().default('Cultists Win!'),
 	villagersWin: z.string().default('Villagers Win!'),
-	theCultistsWere: z.string().default('The cultists were:'),
-	
+	theCultistsWere: z.string().default('The cultists were:'),	awaitingNewRitual: z.string().default('Awaiting the host to begin a new ritual...'),	
 	// Cultist thresholds
 	oneCultistsMaxPlayers: z.number().int().min(4).default(7),
 	twoCultistsMaxPlayers: z.number().int().min(5).default(11),
