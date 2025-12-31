@@ -23,16 +23,13 @@ export const CreateProfileView: React.FC<Props> = () => {
 		if (!trimmedName) return;
 
 		setIsLoading(true);
-		try {
-			await playerActions.setPlayerName(trimmedName);
-		} finally {
-			setIsLoading(false);
-		}
+		
+		await playerActions.setPlayerName(trimmedName);
 	};
 
 	return (
 		<div className="mx-auto w-full max-w-96 space-y-12">
-			<article className="prose text-center">
+			<article className="prose prose-invert text-center">
 				<Markdown>{config.createProfileMd}</Markdown>
 			</article>
 			<form onSubmit={handleSubmit} className="grid gap-4">

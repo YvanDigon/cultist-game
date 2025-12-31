@@ -14,8 +14,17 @@ export const playerActions = {
 			[playerStore, globalStore],
 			([playerState, globalState]) => {
 				playerState.name = name;
-				globalState.players[kmClient.id] = { name };
+				globalState.players[kmClient.id] = { 
+					name, 
+					isAlive: false 
+				};
 			}
 		);
+	},
+
+	async markRoleSeen() {
+		await kmClient.transact([playerStore], ([playerState]) => {
+			playerState.roleSeen = true;
+		});
 	}
 };

@@ -3,7 +3,6 @@ import { usePlayersWithStatus } from '@/hooks/usePlayersWithStatus';
 import { kmClient } from '@/services/km-client';
 import { cn } from '@/utils/cn';
 import React from 'react';
-import Markdown from 'react-markdown';
 
 interface Props {
 	className?: string;
@@ -34,8 +33,6 @@ export const ConnectionsView: React.FC<React.PropsWithChildren<Props>> = ({
 					<h1>
 						{onlinePlayersCount} {config.players}
 					</h1>
-
-					<Markdown>{config.connectionsMd}</Markdown>
 				</article>
 
 				{children}

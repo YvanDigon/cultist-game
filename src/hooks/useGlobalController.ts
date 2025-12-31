@@ -9,7 +9,7 @@ import { useServerTimer } from './useServerTime';
  * @returns A boolean indicating if the current client is the global controller
  */
 export function useGlobalController() {
-	const { controllerConnectionId } = useSnapshot(globalStore.proxy);
+	const { controllerConnectionId, started, players, gamePhase } = useSnapshot(globalStore.proxy);
 	const connections = useSnapshot(globalStore.connections);
 	const connectionIds = connections.connectionIds;
 	const isGlobalController = controllerConnectionId === kmClient.connectionId;
@@ -33,16 +33,46 @@ export function useGlobalController() {
 			.catch(() => {});
 	}, [connectionIds, controllerConnectionId]);
 
-	// Run global controller-specific logic
+	// Win condition checking
 	useEffect(() => {
-		if (!isGlobalController) {
+		if (!isGlobalController || !started || gamePhase === 'game-over') {
 			return;
 		}
 
-		// IMPORTANT: Global controller-specific logic goes here
-		// For example, a time-based event that modifies the global state
-		// All global controller logic does not need to be time-based
-	}, [isGlobalController, serverTime]);
+		const checkWinCondition = async () => {
+			const alivePlayers = Object.entries(players).filter(([, player]) => player.isAlive);
+			const aliveCultists = alivePlayers.filter(([, player]) => player.role === 'cultist');
+			const aliveNonCultists = alivePlayers.filter(([, player]) => player.role !== 'cultist');
+
+			// No players alive - tie/draw
+			if (alivePlayers.length === 0) {
+				await kmClient.transact([globalStore], ([globalState]) => {
+					globalState.gamePhase = 'game-over';
+					globalState.winner = null;
+				});
+				return;
+			}
+
+			// Cultists win if all non-cultists are dead
+			if (aliveNonCultists.length === 0) {
+				await kmClient.transact([globalStore], ([globalState]) => {
+					globalState.gamePhase = 'game-over';
+					globalState.winner = 'cultists';
+				});
+				return;
+			}
+
+			// Villagers win if all cultists are dead
+			if (aliveCultists.length === 0) {
+				await kmClient.transact([globalStore], ([globalState]) => {
+					globalState.gamePhase = 'game-over';
+					globalState.winner = 'villagers';
+				});
+			}
+		};
+
+		checkWinCondition();
+	}, [isGlobalController, started, gamePhase, players, serverTime]);
 
 	return isGlobalController;
 }

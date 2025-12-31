@@ -1,4 +1,3 @@
-import { Logo } from '@/components/logo';
 import { cn } from '@/utils/cn';
 import * as React from 'react';
 
@@ -10,7 +9,7 @@ interface LayoutProps {
 const PlayerRoot: React.FC<LayoutProps> = ({ children, className }) => (
 	<div
 		className={cn(
-			'grid min-h-dvh grid-rows-[auto_1fr_auto] bg-slate-100',
+			'grid min-h-dvh grid-rows-[auto_1fr_auto] bg-cult-dark',
 			className
 		)}
 	>
@@ -21,12 +20,11 @@ const PlayerRoot: React.FC<LayoutProps> = ({ children, className }) => (
 const PlayerHeader: React.FC<LayoutProps> = ({ children, className }) => (
 	<header
 		className={cn(
-			'sticky top-0 z-10 bg-slate-50/95 shadow-xs backdrop-blur-xs',
+			'sticky top-0 z-10 bg-cult-blue/95 shadow-xs backdrop-blur-xs border-b border-cult-red/30',
 			className
 		)}
 	>
-		<div className="container mx-auto flex items-center justify-between p-4">
-			<Logo />
+		<div className={cn('container mx-auto flex items-center justify-end p-4', className)}>
 			{children}
 		</div>
 	</header>
@@ -43,7 +41,7 @@ const PlayerMain: React.FC<LayoutProps> = ({ children, className }) => (
 const PlayerFooter: React.FC<LayoutProps> = ({ children, className }) => (
 	<footer
 		className={cn(
-			'sticky bottom-0 z-10 border-t border-slate-200 bg-slate-50/95 backdrop-blur-xs',
+			'sticky bottom-0 z-10 border-t border-cult-red/30 bg-cult-blue/95 backdrop-blur-xs',
 			className
 		)}
 	>

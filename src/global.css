@@ -8,7 +8,16 @@
 @plugin '@tailwindcss/typography';
 
 @theme {
-	/* Add theme styling here */
+	/* Cultist theme colors */
+	--color-cult-dark: #0f1419;
+	--color-cult-blue: #1a2332;
+	--color-cult-blue-light: #2d3e5c;
+	--color-cult-red: #8b0000;
+	--color-cult-red-light: #b91c1c;
+	--color-cult-red-bright: #dc2626;
+	--color-cult-accent: #4a0e0e;
+	
+	/* Fonts */
 	--km-font-sans:
 		'Noto Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
 		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -20,25 +29,26 @@
 
 /* Markdown styling with Tailwind Typography (prose) */
 .prose {
-	--tw-prose-headings: var(--color-slate-900);
-	--tw-prose-body: var(--color-slate-900);
-	--tw-prose-bold: var(--color-slate-900);
+	--tw-prose-body: var(--color-slate-100);
+	--tw-prose-headings: var(--color-slate-100);
+	--tw-prose-bold: var(--color-slate-100);
 	--tw-prose-links: var(--color-blue-500);
-	--tw-prose-bullets: var(--color-slate-500);
-	--tw-prose-counters: var(--color-slate-500);
-	--tw-prose-quotes: var(--color-slate-900);
+	--tw-prose-bullets: var(--color-slate-400);
+	--tw-prose-counters: var(--color-slate-400);
+	--tw-prose-quotes: var(--color-slate-100);
 	--tw-prose-pre-bg: var(--color-slate-900);
 	--tw-prose-pre-code: var(--color-slate-100);
-	--tw-prose-hr: var(--color-slate-300);
+	--tw-prose-hr: var(--color-slate-600);
 }
 
 html,
 body {
-	color: var(--color-slate-900);
+	background-color: var(--color-cult-dark);
+	color: var(--color-slate-100);
 }
 
 .km-input {
-	@apply rounded-xl border border-slate-300 bg-slate-50 px-5 py-3 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none;
+	@apply rounded-xl border border-cult-red/30 bg-cult-blue px-5 py-3 text-slate-100 transition-colors focus:ring-2 focus:ring-cult-red focus:outline-none placeholder:text-slate-400;
 }
 
 .km-btn-primary,
@@ -49,17 +59,43 @@ body {
 }
 
 .km-btn-primary {
-	@apply not-disabled:bg-blue-500 not-disabled:text-white not-disabled:hover:bg-blue-600;
+	@apply not-disabled:bg-cult-red not-disabled:text-white not-disabled:hover:bg-cult-red-light;
 }
 
 .km-btn-secondary {
-	@apply not-disabled:bg-blue-100 not-disabled:text-blue-950 not-disabled:hover:bg-blue-200;
+	@apply not-disabled:bg-cult-blue-light not-disabled:text-slate-100 not-disabled:hover:bg-cult-blue not-disabled:border not-disabled:border-cult-red/30;
 }
 
 .km-btn-error {
-	@apply not-disabled:bg-red-500 not-disabled:text-white not-disabled:hover:bg-red-600;
+	@apply not-disabled:bg-cult-red-bright not-disabled:text-white not-disabled:hover:bg-red-700;
 }
 
 .km-btn-neutral {
-	@apply not-disabled:bg-slate-600 not-disabled:text-white not-disabled:hover:bg-slate-700;
+	@apply not-disabled:bg-cult-blue not-disabled:text-slate-100 not-disabled:hover:bg-cult-blue-light;
+}
+
+/* Modal/Dialog theming */
+[data-radix-dialog-overlay],
+[data-radix-alert-dialog-overlay],
+[data-overlay],
+.km-modal-overlay,
+div[style*="position: fixed"][style*="inset: 0"],
+[class*="bg-gray-100"] {
+	background-color: rgba(15, 20, 25, 0.9) !important;
+}
+
+[data-radix-dialog-content],
+[role="alertdialog"],
+[role="dialog"] {
+	background-color: var(--color-cult-blue) !important;
+	border: 1px solid rgba(139, 0, 0, 0.3) !important;
+	color: var(--color-slate-100) !important;
+}
+
+[data-radix-dialog-title] {
+	color: var(--color-slate-100) !important;
+}
+
+[data-radix-dialog-description] {
+	color: var(--color-slate-300) !important;
 }

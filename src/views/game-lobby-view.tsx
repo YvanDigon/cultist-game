@@ -9,7 +9,7 @@ import Markdown from 'react-markdown';
  */
 export const GameLobbyView: React.FC<React.PropsWithChildren> = () => {
 	return (
-		<article className="prose">
+		<article className="prose prose-invert">
 			<Markdown>{config.gameLobbyMd}</Markdown>
 		</article>
 	);

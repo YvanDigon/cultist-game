@@ -1,95 +1,176 @@
 # yaml-language-server: $schema=./.kokimoki/schema.json
 
-# Translations
-title: 'Host Starter'
+title: 'Cultist'
 
+# Lobby
 gameLobbyMd: |
-  # Game Lobby
+  # Waiting for the game to start...
+  
+  The host will start the game when enough players have joined.
+  
+  ## How to Play
+  
+  **Cultist** is a social deduction game where cultists try to eliminate villagers secretly at night, while villagers try to identify and execute cultists during the day.
+  
+  ### Roles
+  - **Cultist**: Votes to sacrifice villagers at night
+  - **Simple Villager**: Votes to execute suspects during the day
+  - **Village Idiot**: Cannot be executed
+  - **Medium**: Can investigate one player each night to learn their role
 
-  This is a sample markdown to demonstrate various markdown features.
+# Roles
+cultistRoleName: 'Cultist'
+villagerRoleName: 'Simple Villager'
+idiotRoleName: 'Village Idiot'
+mediumRoleName: 'Medium'
+hunterRoleName: 'Hunter'
 
-  ## Starting soon
+cultistRoleDescriptionMd: |
+  You are a **Cultist**. 
+  
+  During the night, you vote to sacrifice a villager. You know who your fellow cultists are. Work together to eliminate all villagers!
 
-  Game is starting soon. **Get ready!**
+villagerRoleDescriptionMd: |
+  You are a **Simple Villager**. 
+  
+  During the day, vote to execute suspects. Try to find and eliminate all the cultists before they eliminate you!
 
-  ## Rules
+idiotRoleDescriptionMd: |
+  You are the **Village Idiot**. 
+  
+  You can be sacrificed at night like anyone else, but if the village tries to execute you during the day, you will survive and your role will be revealed to everyone.
 
-  1. Wait for the host to start the game.
-  2. Follow the instructions on the presenter screen.
-  3. Open [Games for Crowds](https://gamesforcrowds.com) for more info.
+mediumRoleDescriptionMd: |
+  You are the **Medium**. 
+  
+  Each night, you can investigate one player to learn their true role. Be careful not to reveal your role, or the Cultists will target you.
 
-  ## What people say
+hunterRoleDescriptionMd: |
+  You are the **Hunter**. 
+  
+  If you are eliminated (either sacrificed at night or executed during the day), you take one player down with you. Choose wisely!
 
-  > **This game is awesome!** - Player 1
+roleRevealTitle: 'Your Role'
+newGameMessage: 'A new game starts. You get a new role!'
+villagerTeamGoalMd: |
+  **Your Mission:** Work with the villagers to identify and execute all cultists during the day phase before they sacrifice the entire village.
+continueButton: 'Continue'
 
-  > **I had a good time playing this.** - Player 2
+# Hunter
+hunterEliminatedTitle: 'You have been eliminated!'
+hunterChooseTarget: 'As the Hunter, choose one player to eliminate with you:'
+hunterTargetButton: 'Eliminate'
+hunterChoiceConfirmed: '✓ Target eliminated'
+hunterTargetEliminated: '{name} has been eliminated by the Hunter'
+hunterYouWereEliminated: 'You were eliminated by the Hunter'
 
-  > **Always looking forward to the next round!**  - Player 3
+# Night Phase
+nightPhaseTitle: 'Night Falls'
+nightPhaseCultistInstructions: 'Vote to sacrifice a villager'
+nightPhaseVillagerWait: 'The night falls... Wait while cultists make their choice...'
+nightPhaseSilenceMessage: 'Remain silent for now. 🤫'
+nightPhaseMediumInstructions: 'Investigate a player to learn their role'
+mediumInvestigationResult: '{name} is a {role}'
+mediumInvestigationRecorded: '🔮 Your medium power reveals the truth...'
+yourVote: 'Your Vote:'
+voteButton: 'Vote to Sacrifice'
+changeVoteButton: 'Change Vote'
+voteRecorded: 'Vote Recorded, wait for the host...'
+cultistsAgreeWarning: 'Cultists must agree on one person!!'
+sacrificeRandomMessage: 'The votes were tied. The victim was chosen randomly.'
 
-  ---
+# Day Phase
+dayPhaseTitle: 'Day Breaks'
+lastNightSacrifice: 'Last night, **{name}** was sacrificed. They were a **{role}**.'
+noSacrificeLastNight: 'Nobody was sacrificed last night.'
+voteToExecute: 'Vote to Execute'
+validateVoteButton: 'Validate Vote'
+voteValidated: 'Vote Validated'
+youAreDead: 'You were sacrificed'
+deadPlayerMessage: 'You can''t talk to other players. Please wait until the end of the game'
 
-  ## Sample Code
+lastDayExecution: 'Yesterday, **{name}** was executed. They were a **{role}**.'
+lastDayExecutionTie: 'Yesterday ended in a tie. Nobody was executed.'
+lastDayIdiotRevealed: 'Yesterday, the village tried to execute **{name}**, but they are the **Village Idiot** and survived!'
+noExecutionYesterday: 'Nobody was executed yesterday.'
 
-  ```
-  // Code block
-  console.log('Hello, world!');
-  ```
+# Game Over
+gameOverTitle: 'Game Over'
+cultistsWin: 'The Cultists Win!'
+villagersWin: 'The Villagers Win!'
+theCultistsWere: 'The cultists were:'
 
-  ## Sample Image
+# Cultist thresholds
+oneCultistsMaxPlayers: 7    # Up to 7 players = 1 cultist
+twoCultistsMaxPlayers: 11   # 8-11 players = 2 cultists
+threeCultistsMaxPlayers: 18 # 12-18 players = 3 cultists, 19+ players = 4 cultists
 
-  ![Logo](/logo.svg)
-
-connectionsMd: |
-  Scan the QR to join the game.
-
-sharedStateMd: |
-  # Shared State Host
-  This is an example of shared state view. Host can start the game, open the presenter screen and allow players to join by scanning the QR.
-
-  ## Host Actions
-  Here's a demo of dashboard actions that can be used to control the state on presenter and player screens.
-
-sharedStatePlayerMd: |
-  # Shared State Player
-  You are connected as a player. Host has started the game. In this shared state example the playtime is synchronized between all players.
-
+# Host Controls
 players: 'Players Connected'
 online: 'Online'
 offline: 'Offline'
 startButton: 'Start Game'
-stopButton: 'Stop Game'
-
+restartButton: 'Restart Game'
+resetPlayersButton: 'Reset Players'
 loading: 'Loading...'
 
+hostNightPhaseTitle: 'Night Phase - Round {round}'
+hostDayPhaseTitle: 'Day Phase - Round {round}'
+cultistVotes: 'Cultist Votes:'
+cultistsDecided: 'Cultists have decided'
+validateVotesButton: 'Validate Votes'
+startDayPhaseButton: 'Start Day Phase'
+startNightPhaseButton: 'Start Night Phase'
+validateAllVotesButton: 'Validate All Votes'
+
+playerLinkLabel: 'Player Link'
+presenterLinkLabel: 'Presenter Link'
+togglePresenterQrButton: 'Toggle Presenter QR'
+endGameButton: 'End Game'
+newRitualButton: 'Begin New Game'
+dismissParticipantsButton: 'Reset Players'
+gameEndedNoWinner: 'The Game Was Interrupted'
+allPlayerRoles: 'Revealed Identities'
+
+# Menu
 menuHelpMd: |
-  # Help
+  # How to Play Cultists
+  
+  **Cultist** is a social deduction game where players are secretly assigned roles and must work to achieve their team's victory.
+  
+  ## Roles
+  
+  - **Cultist**: Votes to sacrifice villagers at night
+  - **Simple Villager**: Votes to execute suspects during the day
+  - **Village Idiot**: Cannot be executed
+  - **Medium**: Can investigate one player each night to learn their role
+  
+  ## Game Flow
+  
+  1. **Night Phase**: Cultists vote to sacrifice a player
+  2. **Day Phase**: All players vote to execute a suspect
+  3. Game continues until one team wins.
 
-  This is the help section. Here you can find information about how to play the game and get assistance if needed.
+  ## Winning
+  
+  - **Cultists win** when all non-cultists are eliminated
+  - **Villagers win** when all cultists are eliminated
 
-  ## How to Play
+menuAriaLabel: 'Open menu drawer'
+menuHelpAriaLabel: 'Open help drawer'
 
-  1. Join the game using the provided link or QR code.
-  2. Follow the instructions on your screen.
-  3. Interact with other players as required by the game.
-
-  ## Getting Assistance
-
-  If you encounter any issues, please contact the host or refer to the FAQ section on our website.
-
+# Create Profile
 createProfileMd: |
-  # Welcome!
-
+  # Welcome to Cultist!
+  
   Please enter your name to join the game.
 
 playerNamePlaceholder: 'Your name...'
 playerNameLabel: 'Name:'
 playerNameButton: 'Continue'
 
-playerLinkLabel: 'Player Link'
-presenterLinkLabel: 'Presenter Link'
-
-togglePresenterQrButton: 'Toggle Presenter QR'
-openPlayerHelpButton: 'Force Players Help to Open'
-
-menuAriaLabel: 'Open menu drawer'
-menuHelpAriaLabel: 'Open help drawer'
+# Waiting for game
+waitingForGameMd: |
+  # Please wait for the next game round.
+  
+  You're about to move to the village of Gordes.

@@ -15,9 +15,9 @@ export const PlayerMenu: React.FC = () => {
 	const handleOpenHelp = () => {
 		openDrawer({
 			content: (
-				<div className="max-h-full w-full overflow-y-auto">
+				<div className="max-h-full w-full overflow-y-auto bg-cult-dark">
 					<div className="container mx-auto px-4 py-16">
-						<article className="prose">
+						<article className="prose prose-invert">
 							<Markdown>{config.menuHelpMd}</Markdown>
 						</article>
 					</div>
