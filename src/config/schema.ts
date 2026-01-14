@@ -76,6 +76,32 @@ export const schema = z.object({
 	twoCultistsMaxPlayers: z.number().int().min(5).default(11),
 	threeCultistsMaxPlayers: z.number().int().min(6).default(18),
 	
+	// Host Instructions
+	hostInstructionsTitleMd: z.string().default('# The Ritual of Cultists'),
+	hostInstructionsMd: z.string().default(`## Preparation
+- Gather at least 3 participants to begin the ritual
+- Once enough souls have assembled, the host may commence the game
+
+## The Ritual Cycle
+1. **Night Phase**: Under cover of darkness, the cultists convene in secret to choose their next sacrifice
+2. **Day Phase**: The village awakens to discover the victim. The remaining villagers must deliberate and vote to execute a suspected cultist
+
+## Victory Conditions
+- **The Cultists** triumph when all non-believers have been sacrificed
+- **The Villagers** prevail when all cultists have been executed
+
+## Sacred Roles
+🔥 **Cultist**: Votes to sacrifice villagers under the veil of night
+
+👤 **Simple Villager**: Votes to execute suspects in the light of day
+
+🤪 **Village Idiot**: Protected from execution by divine folly
+
+🔮 **Medium**: Channels spirits to investigate one player each night, revealing their true nature
+
+🏹 **Hunter**: Takes one soul with them when eliminated`),
+	hostInstructionsButton: z.string().default('Game Instructions'),
+
 	// Host Controls
 	players: z.string().default('Players Connected'),
 	online: z.string().default('Online'),

@@ -17,8 +17,8 @@ export const NightPhaseView: React.FC = () => {
 	// Check if this player is the hunter who was just eliminated
 	const isEliminatedHunter = hunterEliminatedId === kmClient.id && myRole === 'hunter' && !isAlive;
 
-	// Check if this player was just killed by the Hunter
-	const wasKilledByHunter = hunterTargetChoice === kmClient.id && !isAlive;
+	// Check if this player was just killed by the Hunter (only when hunter was eliminated)
+	const wasKilledByHunter = hunterEliminatedId !== null && hunterTargetChoice === kmClient.id && !isAlive && kmClient.id !== hunterEliminatedId;
 
 	const alivePlayers = Object.entries(players).filter(([id, player]) => {
 		if (!player.isAlive) return false;

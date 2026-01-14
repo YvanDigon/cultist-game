@@ -1,3 +1,4 @@
+import { withKmProviders } from '@/components/with-km-providers';
 import { config } from '@/config';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { useGlobalController } from '@/hooks/useGlobalController';
@@ -8,13 +9,16 @@ import { kmClient } from '@/services/km-client';
 import { globalActions } from '@/state/actions/global-actions';
 import { globalStore } from '@/state/stores/global-store';
 import { useSnapshot } from '@kokimoki/app';
-import { CirclePlay, RotateCcw, Trash2, SquareArrowOutUpRight } from 'lucide-react';
+import { useKmModal } from '@kokimoki/shared';
+import { CirclePlay, RotateCcw, Trash2, SquareArrowOutUpRight, Info } from 'lucide-react';
 import * as React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const App: React.FC = () => {
 	useGlobalController();
-	const { title } = config;
+	const { title, hostInstructionsTitleMd, hostInstructionsMd, hostInstructionsButton } = config;
 	const isHost = kmClient.clientContext.mode === 'host';
+	const { openDrawer } = useKmModal();
 	const { 
 		started, 
 		gamePhase, 
@@ -40,6 +44,26 @@ const App: React.FC = () => {
 
 		return () => clearTimeout(timeout);
 	}, [started]);
+
+	const handleShowInstructions = () => {
+		openDrawer({
+			title: '',
+			content: (
+				<div className="space-y-4">
+					<div className="prose prose-sm max-w-none">
+						<ReactMarkdown>
+							{hostInstructionsTitleMd}
+						</ReactMarkdown>
+					</div>
+					<div className="prose prose-sm max-w-none">
+						<ReactMarkdown>
+							{hostInstructionsMd}
+						</ReactMarkdown>
+					</div>
+				</div>
+			)
+		});
+	};
 
 	if (kmClient.clientContext.mode !== 'host') {
 		throw new Error('App host rendered in non-host mode');
@@ -90,8 +114,38 @@ const App: React.FC = () => {
 
 	return (
 		<HostPresenterLayout.Root>
+			<HostPresenterLayout.Header>
+				{started && (
+					<button
+						type="button"
+						className="km-btn-secondary"
+						onClick={handleShowInstructions}
+						aria-label={hostInstructionsButton}
+					>
+						<Info className="size-5" />
+						{hostInstructionsButton}
+					</button>
+				)}
+			</HostPresenterLayout.Header>
+
 			<HostPresenterLayout.Main>
 				<div className="w-full space-y-6">
+					{/* Lobby Instructions */}
+					{!started && (
+						<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-8 space-y-6">
+							<div className="prose prose-lg max-w-none">
+								<ReactMarkdown>
+									{hostInstructionsTitleMd}
+								</ReactMarkdown>
+							</div>
+							<div className="prose max-w-none">
+								<ReactMarkdown>
+									{hostInstructionsMd}
+								</ReactMarkdown>
+							</div>
+						</div>
+					)}
+
 					{/* Player Count */}
 					<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-6">
 						<h2 className="text-2xl font-bold text-slate-100">{config.players}</h2>
@@ -312,4 +366,4 @@ const App: React.FC = () => {
 	);
 };
 
-export default App;
+export default withKmProviders(App);

@@ -297,6 +297,38 @@ export const globalActions = {
 
 	async startNightPhase() {
 		await kmClient.transact([globalStore], ([globalState]) => {
+			// If hunter was eliminated and made their choice, just proceed to night phase
+			if (globalState.hunterEliminatedId !== null && globalState.hunterTargetChoice !== null) {
+				// Check win conditions after hunter's choice
+				const alivePlayers = Object.entries(globalState.players).filter(([, player]) => player.isAlive);
+				const aliveCultists = alivePlayers.filter(([, player]) => player.role === 'cultist');
+				const aliveNonCultists = alivePlayers.filter(([, player]) => player.role !== 'cultist');
+
+				// Cultists win if all non-cultists are dead
+				if (aliveNonCultists.length === 0 && aliveCultists.length > 0) {
+					globalState.gamePhase = 'game-over';
+					globalState.winner = 'cultists';
+					return;
+				}
+
+				// Villagers win if all cultists are dead
+				if (aliveCultists.length === 0 && aliveNonCultists.length > 0) {
+					globalState.gamePhase = 'game-over';
+					globalState.winner = 'villagers';
+					return;
+				}
+
+				// Proceed to night phase
+				globalState.roundNumber += 1;
+				globalState.gamePhase = 'night';
+				globalState.nightVotes = {};
+				globalState.nightVotesValidated = false;
+				globalState.sacrificeWasRandomlyChosen = false;
+				globalState.hunterEliminatedId = null;
+				globalState.hunterTargetChoice = null;
+				return;
+			}
+
 			// Count validated votes
 			const voteCounts: Record<string, number> = {};
 			globalState.dayVotes

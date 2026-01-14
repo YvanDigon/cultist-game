@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-01-14
+
+### Added
+- Game instructions display on host screen in lobby phase
+- Info button on host screen to view game instructions during active game
+
+### Fixed
+- Hunter elimination during day phase now properly triggers choice menu and prevents premature night phase transition
+- Players sacrificed by cultists no longer see incorrect "eliminated by Hunter" message
+
 ## [0.1.2] - 2025-12-31
 
 ### Added
