@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-01-21
+
+### Fixed
+- AI narration tone system now correctly uses configurable tone labels from default.config.yaml
+- Narration tone selection (Humorous/Dark/Neutral) now properly maps to corresponding AI generation guidance
+- Tone labels can now be customized in configuration and will automatically update AI narration style
+
+### Changed
+- Internal tone storage changed from hardcoded values to dynamic config references (tone1/tone2/tone3)
+- AI narration system now reads tone definitions from config at generation time rather than using fixed mappings
+
 ## [0.1.5] - 2026-01-21
 
 ### Added

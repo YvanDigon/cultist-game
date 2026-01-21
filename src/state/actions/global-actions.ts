@@ -592,23 +592,29 @@ export const globalActions = {
 				}
 			}
 
-			// Define tone guidance
-			const toneGuide = {
-				dark: 'Use dark, ominous, gothic horror language. Create tension and dread. Reference shadows, whispers, ancient evil, blood rituals.',
-				humorous: 'Use witty, comedic language with dark humor. Include puns, ironic observations, and absurd situations while maintaining the cult theme.',
-				neutral: 'Use clear, dramatic narration. Focus on storytelling without excessive darkness or comedy. Professional narrator style.'
+			// Define tone guidance based on config values
+			const toneLabel = tone === 'tone1' ? config.narrationTone1 : 
+			                  tone === 'tone2' ? config.narrationTone2 : 
+			                  config.narrationTone3;
+			
+			const toneGuide: Record<string, string> = {
+				'Humorous': 'Use witty, comedic language with dark humor. Include puns, ironic observations, and absurd situations while maintaining the cult theme.',
+				'Dark': 'Use dark, ominous, gothic horror language. Create tension and dread. Reference shadows, whispers, ancient evil, blood rituals.',
+				'Neutral': 'Use clear, dramatic narration. Focus on storytelling without excessive darkness or comedy. Professional narrator style.'
 			};
+			
+			const toneGuidance = toneGuide[toneLabel] || toneGuide['Dark'];
 
 			// Define length guidance
 			const lengthGuide = {
-				short: 'Keep the narration SHORT - around 50 words total. Be concise but impactful.',
-				long: 'Write a LONGER narration - around 120 words total. Add more atmosphere and detail.'
+				short: `Keep the narration SHORT - around ${config.narrationLengthShort} words total. Be concise but impactful.`,
+				long: `Write a LONGER narration - around ${config.narrationLengthLong} words total. Add more atmosphere and detail.`
 			};
 
 			const systemPrompt = `You are a dramatic narrator for a social deduction game called "Cultist" set in the village of "${villageName || 'the village'}". 
 The cult is called "${cultName || 'The Cult'}".
 
-TONE: ${toneGuide[tone]}
+TONE: ${toneGuidance}
 
 LENGTH: ${lengthGuide[length]}
 

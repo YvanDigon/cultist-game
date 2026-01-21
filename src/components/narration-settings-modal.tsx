@@ -57,7 +57,7 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 	const { narrationSettings } = useSnapshot(globalStore.proxy);
 	const [villageName, setVillageName] = React.useState(narrationSettings.villageName || '');
 	const [cultName, setCultName] = React.useState(narrationSettings.cultName || '');
-	const [tone, setTone] = React.useState<NarrationTone>(narrationSettings.tone || 'dark');
+	const [tone, setTone] = React.useState<NarrationTone>(narrationSettings.tone || 'tone2');
 	const [length, setLength] = React.useState<NarrationLength>(narrationSettings.length || 'short');
 	const [language, setLanguage] = React.useState(narrationSettings.language || 'English');
 	const [enableNarration, setEnableNarration] = React.useState(narrationSettings.enabled);
@@ -66,7 +66,7 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 	React.useEffect(() => {
 		setVillageName(narrationSettings.villageName || '');
 		setCultName(narrationSettings.cultName || '');
-		setTone(narrationSettings.tone || 'dark');
+		setTone(narrationSettings.tone || 'tone2');
 		setLength(narrationSettings.length || 'short');
 		setLanguage(narrationSettings.language || 'English');
 		setEnableNarration(narrationSettings.enabled);
@@ -92,7 +92,7 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 		await globalActions.setNarrationSettings({
 			villageName: '',
 			cultName: '',
-			tone: 'dark',
+			tone: 'tone2',
 			length: 'short',
 			language: 'English',
 			enabled: false
@@ -101,9 +101,9 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 	};
 
 	const toneOptions: { value: NarrationTone; label: string }[] = [
-		{ value: 'dark', label: config.narrationTone1 },
-		{ value: 'humorous', label: config.narrationTone2 },
-		{ value: 'neutral', label: config.narrationTone3 }
+		{ value: 'tone1', label: config.narrationTone1 },
+		{ value: 'tone2', label: config.narrationTone2 },
+		{ value: 'tone3', label: config.narrationTone3 }
 	];
 
 	const lengthOptions: { value: NarrationLength; label: string }[] = [

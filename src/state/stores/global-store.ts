@@ -2,6 +2,7 @@ import { kmClient } from '@/services/km-client';
 
 export type Role = 'cultist' | 'villager' | 'idiot' | 'medium' | 'hunter';
 export type GamePhase = 'lobby' | 'night' | 'day' | 'game-over';
+export type NarrationTone = 'tone1' | 'tone2' | 'tone3';
 
 export interface DayVote {
 	voterId: string;
@@ -9,7 +10,6 @@ export interface DayVote {
 	validated: boolean;
 }
 
-export type NarrationTone = 'dark' | 'humorous' | 'neutral';
 export type NarrationLength = 'short' | 'long';
 
 export interface NarrationSettings {
@@ -89,7 +89,7 @@ const initialState: GlobalState = {
 	narrationSettings: {
 		villageName: '',
 		cultName: '',
-		tone: 'dark',
+		tone: 'tone2',
 		length: 'short',
 		language: 'English',
 		enabled: false

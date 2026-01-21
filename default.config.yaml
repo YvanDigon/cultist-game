@@ -228,7 +228,7 @@ waitingForGameMd: |
   
   You're about to move to the village of Gordes.
 
-# Narration Settings
+# Narration Texts
 narrationSettingsTitle: 'AI Narration'
 narrationSettingsDescription: 'Generate dramatic narration text for each phase of the game. Perfect for hosts who want to role-play as a storyteller.'
 enableNarrationLabel: 'Enable AI Narration'
@@ -237,11 +237,6 @@ villageNamePlaceholder: 'e.g., Ravenholm, Gordes...'
 cultNameLabel: 'Cult Name'
 cultNamePlaceholder: 'e.g., The Crimson Order, Children of the Flame...'
 narrationToneLabel: 'Narration Tone'
-narrationTone1: 'Humorous'
-narrationTone2: 'Dark'
-narrationTone3: 'Neutral'
-narrationLengthShort: 75
-narrationLengthLong: 130
 narrationLengthShortLabel: 'Short (~{count} words)'
 narrationLengthLongLabel: 'Long (~{count} words)'
 narrationLanguageLabel: 'Language'
@@ -255,3 +250,10 @@ regenerationUsedLabel: 'already used'
 generatingNarrationMessage: 'Generating narration...'
 noNarrationMessage: 'No narration generated yet.'
 narrationDisabledMessage: 'AI narration is not enabled for this game.'
+
+# Narration Settings Defaults
+narrationTone1: 'Humorous'
+narrationTone2: 'Dark'
+narrationTone3: 'Neutral'
+narrationLengthShort: 75 #Words
+narrationLengthLong: 130 #Words
