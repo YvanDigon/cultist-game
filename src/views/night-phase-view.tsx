@@ -135,7 +135,7 @@ export const NightPhaseView: React.FC = () => {
 
 				{myInvestigation && players[myInvestigation] && (
 					<div className="rounded-xl bg-purple-100 p-4 text-purple-900">
-						<p className="font-semibold">🔮 Your medium power reveals the truth...</p>
+					<p className="font-semibold">{config.mediumInvestigationRecorded}</p>
 						<p className="text-sm mt-2">
 							{config.mediumInvestigationResult
 								.replace('{name}', players[myInvestigation].name)
@@ -147,7 +147,7 @@ export const NightPhaseView: React.FC = () => {
 				{/* Show all past investigations */}
 				{Object.keys(myKnowledge).length > 0 && (
 					<div className="rounded-xl bg-cult-blue border border-purple-500/30 p-4">
-						<p className="font-semibold text-purple-200 mb-3">Your Investigations:</p>
+					<p className="font-semibold text-purple-200 mb-3">{config.yourInvestigationsLabel}</p>
 						<div className="space-y-2">
 							{Object.entries(myKnowledge).map(([targetId, role]) => (
 								<div key={targetId} className="flex justify-between items-center text-slate-200">
@@ -231,7 +231,7 @@ export const NightPhaseView: React.FC = () => {
 			
 			{otherCultists.length > 0 && (
 				<div className="rounded-xl bg-red-900 p-4 text-red-50">
-					<p className="font-semibold">Your Fellow Cultists:</p>
+					<p className="font-semibold">{config.yourFellowCultistsLabel}</p>
 					<ul className="mt-2 space-y-1">
 						{otherCultists.map(([id, player]) => (
 							<li key={id} className="flex items-center gap-2">
@@ -281,7 +281,7 @@ export const NightPhaseView: React.FC = () => {
 								<span className="font-medium">{player.name}</span>
 								<div className="flex items-center gap-2">
 									{votesForThisPlayer > 0 && !nightVotesValidated && (
-										<span className="text-sm">🗳️ {votesForThisPlayer}</span>
+										<span className="text-sm">{config.voteIndicator} {votesForThisPlayer}</span>
 									)}
 									{myVote === id && (
 										<span className="text-sm">✓</span>

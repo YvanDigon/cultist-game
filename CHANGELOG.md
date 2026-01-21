@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-01-21
+
+### Added
+- AI Narration system for hosts to create immersive storytelling experience
+  - Settings modal appears when starting or restarting a game
+  - Configurable village name, cult name, tone (Dark/Humorous/Neutral), length (Short/Long), and language
+  - Phase-by-phase narration generation with actual game events (sacrifices, executions, special roles)
+  - Narration drawer accessible via button in host header during active games
+  - Regeneration option (once per phase) for narration scripts
+  - All narration written at 12-year-old reading level for accessibility
+  - Settings persist across page refreshes
+- Hide/Show roles toggle button on host view to conceal or reveal player roles in the player list
+
+### Changed
+- "Start Game" button now opens narration settings modal before starting
+- "New Ritual" (restart) button now opens narration settings modal with previous settings pre-filled
+- Narration settings can be adjusted for each new game
+
 ## [0.1.3] - 2026-01-14
 
 ### Added

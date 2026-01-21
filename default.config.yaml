@@ -17,6 +17,7 @@ gameLobbyMd: |
   - **Simple Villager**: Votes to execute suspects during the day
   - **Village Idiot**: Cannot be executed
   - **Medium**: Can investigate one player each night to learn their role
+  - **Hunter**: If eliminated, can take one player down with them
 
 # Roles
 cultistRoleName: 'Cultist'
@@ -78,6 +79,9 @@ changeVoteButton: 'Change Vote'
 voteRecorded: 'Vote Recorded, wait for the host...'
 cultistsAgreeWarning: 'Cultists must agree on one person!!'
 sacrificeRandomMessage: 'The votes were tied. The victim was chosen randomly.'
+yourInvestigationsLabel: 'Your Investigations:'
+yourFellowCultistsLabel: 'Your Fellow Cultists:'
+voteIndicator: '🗳️'
 
 # Day Phase
 dayPhaseTitle: 'Day Breaks'
@@ -100,6 +104,8 @@ gameOverTitle: 'Game Over'
 cultistsWin: 'The Cultists Win!'
 villagersWin: 'The Villagers Win!'
 theCultistsWere: 'The cultists were:'
+hostEndedGameMessage: 'The host ended the game. No winner was declared.'
+hostEndedGamePlayerMessage: 'The host ended the game early. No winners this time.'
 awaitingNewRitual: 'Awaiting the host to begin a new game...'
 
 # Cultist thresholds - determine number of cultists based on player count
@@ -152,6 +158,21 @@ validateVotesButton: 'Validate Votes'
 startDayPhaseButton: 'Start Day Phase'
 startNightPhaseButton: 'Start Night Phase'
 validateAllVotesButton: 'Validate All Votes'
+showRolesButton: 'Show roles'
+hideRolesButton: 'Hide roles'
+playersLabel: 'Players'
+eliminatedLabel: '(Eliminated)'
+dayVotesLabel: 'Day Votes:'
+validatedLabel: 'Validated:'
+waitingForHunterMessage: '⚠️ Waiting for Hunter to choose their target'
+
+# Presenter
+nightPhasePresenterTitle: 'NIGHT PHASE'
+dayPhasePresenterTitle: 'DAY PHASE'
+roundLabel: 'Round'
+eliminatedPlayersLabel: 'Eliminated Players'
+publicVotingLabel: 'Public Voting'
+noVotesYet: 'No votes yet...'
 
 playerLinkLabel: 'Player Link'
 presenterLinkLabel: 'Presenter Link'
@@ -174,6 +195,7 @@ menuHelpMd: |
   - **Simple Villager**: Votes to execute suspects during the day
   - **Village Idiot**: Cannot be executed
   - **Medium**: Can investigate one player each night to learn their role
+  - **Hunter**: If eliminated, can take one player down with them
   
   ## Game Flow
   
@@ -204,3 +226,30 @@ waitingForGameMd: |
   # Please wait for the next game round.
   
   You're about to move to the village of Gordes.
+
+# Narration Settings
+narrationSettingsTitle: 'AI Narration'
+narrationSettingsDescription: 'Generate dramatic narration text for each phase of the game. Perfect for hosts who want to role-play as a storyteller.'
+enableNarrationLabel: 'Enable AI Narration'
+villageNameLabel: 'Village Name'
+villageNamePlaceholder: 'e.g., Ravenholm, Gordes...'
+cultNameLabel: 'Cult Name'
+cultNamePlaceholder: 'e.g., The Crimson Order, Children of the Flame...'
+narrationToneLabel: 'Narration Tone'
+narrationToneDark: 'Dark'
+narrationToneHumorous: 'Humorous'
+narrationToneNeutral: 'Neutral'
+narrationLengthLabel: 'Narration Length'
+narrationLengthShort: 'Short (~50 words)'
+narrationLengthLong: 'Long (~120 words)'
+narrationLanguageLabel: 'Language'
+startWithNarrationButton: 'Start Game with Narration'
+startWithoutNarrationButton: 'Start Game'
+narrationDrawerTitle: 'Narration Script'
+narrationDrawerButton: 'Narration'
+generateNarrationButton: 'Generate Narration'
+regenerateNarrationButton: 'Regenerate'
+regenerationUsedLabel: 'already used'
+generatingNarrationMessage: 'Generating narration...'
+noNarrationMessage: 'No narration generated yet.'
+narrationDisabledMessage: 'AI narration is not enabled for this game.'

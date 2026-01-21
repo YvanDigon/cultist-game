@@ -186,8 +186,8 @@ const App: React.FC = () => {
 								<div className="absolute inset-0 bg-gradient-to-b from-cult-dark/60 via-cult-dark/80 to-cult-dark" />
 								{/* Phase Title Overlay */}
 								<div className="absolute inset-0 flex flex-col items-center justify-center">
-									<h1 className="text-8xl font-bold text-slate-100 tracking-wider" style={{ fontFamily: 'serif' }}>NIGHT PHASE</h1>
-									<p className="text-3xl text-slate-300 mt-3">Round {roundNumber}</p>
+									<h1 className="text-8xl font-bold text-slate-100 tracking-wider" style={{ fontFamily: 'serif' }}>{config.nightPhasePresenterTitle}</h1>
+									<p className="text-3xl text-slate-300 mt-3">{config.roundLabel} {roundNumber}</p>
 								</div>
 							</div>
 						</div>
@@ -202,7 +202,7 @@ const App: React.FC = () => {
 						{/* Eliminated Players Block */}
 						{eliminatedPlayers.length > 0 && (
 							<div className="space-y-6">
-								<h2 className="text-4xl font-semibold text-slate-200 text-center tracking-wide">Eliminated Players</h2>
+							<h2 className="text-4xl font-semibold text-slate-200 text-center tracking-wide">{config.eliminatedPlayersLabel}</h2>
 								<div className="grid grid-cols-4 gap-4">
 									{eliminatedPlayers.map(([id, player]) => (
 										<div 
@@ -251,8 +251,8 @@ const App: React.FC = () => {
 								<div className="absolute inset-0 bg-gradient-to-b from-amber-950/40 via-cult-dark/70 to-cult-dark" />
 								{/* Phase Title Overlay */}
 								<div className="absolute inset-0 flex flex-col items-center justify-center">
-									<h1 className="text-8xl font-bold text-slate-100 tracking-wider" style={{ fontFamily: 'serif' }}>DAY PHASE</h1>
-									<p className="text-3xl text-amber-200 mt-3">Round {roundNumber}</p>
+									<h1 className="text-8xl font-bold text-slate-100 tracking-wider" style={{ fontFamily: 'serif' }}>{config.dayPhasePresenterTitle}</h1>
+									<p className="text-3xl text-amber-200 mt-3">{config.roundLabel} {roundNumber}</p>
 								</div>
 							</div>
 						</div>
@@ -275,8 +275,7 @@ const App: React.FC = () => {
 
 						{/* Public Voting Block */}
 						<div className="space-y-6">
-							<h2 className="text-5xl font-semibold text-slate-100 text-center tracking-wide" style={{ fontFamily: 'serif' }}>Public Voting</h2>
-							
+						<h2 className="text-5xl font-semibold text-slate-100 text-center tracking-wide" style={{ fontFamily: 'serif' }}>{config.publicVotingLabel}</h2>
 							{/* Execution Result Preview (after votes validated) */}
 							{dayVotes.length > 0 && dayVotes.every(v => v.validated) && (() => {
 								// Calculate who would be executed
@@ -364,14 +363,14 @@ const App: React.FC = () => {
 									})}
 								</div>
 							) : (
-								<p className="text-3xl text-slate-400 text-center py-8">No votes yet...</p>
+								<p className="text-3xl text-slate-400 text-center py-8">{config.noVotesYet}</p>
 							)}
 						</div>
 
 						{/* Eliminated Players Block */}
 						{eliminatedPlayers.length > 0 && (
 							<div className="space-y-6">
-								<h2 className="text-4xl font-semibold text-slate-200 text-center tracking-wide">Eliminated Players</h2>
+						<h2 className="text-4xl font-semibold text-slate-200 text-center tracking-wide">{config.eliminatedPlayersLabel}</h2>
 								<div className="grid grid-cols-4 gap-4">
 									{eliminatedPlayers.map(([id, player]) => (
 										<div 

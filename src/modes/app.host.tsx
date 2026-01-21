@@ -1,3 +1,5 @@
+import { NarrationDrawer } from '@/components/narration-drawer';
+import { NarrationSettingsModal } from '@/components/narration-settings-modal';
 import { withKmProviders } from '@/components/with-km-providers';
 import { config } from '@/config';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
@@ -10,7 +12,7 @@ import { globalActions } from '@/state/actions/global-actions';
 import { globalStore } from '@/state/stores/global-store';
 import { useSnapshot } from '@kokimoki/app';
 import { useKmModal } from '@kokimoki/shared';
-import { CirclePlay, RotateCcw, Trash2, SquareArrowOutUpRight, Info } from 'lucide-react';
+import { CirclePlay, RotateCcw, Trash2, SquareArrowOutUpRight, Info, Eye, EyeOff, Sparkles } from 'lucide-react';
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 
@@ -29,9 +31,13 @@ const App: React.FC = () => {
 		dayVotes,
 		winner,
 		hunterEliminatedId,
-		hunterTargetChoice
+		hunterTargetChoice,
+		narrationSettings
 	} = useSnapshot(globalStore.proxy);
 	const [buttonCooldown, setButtonCooldown] = React.useState(true);
+	const [showRoles, setShowRoles] = React.useState(true);
+	const [showNarrationModal, setShowNarrationModal] = React.useState(false);
+	const [showNarrationDrawer, setShowNarrationDrawer] = React.useState(false);
 	const playersWithStatus = usePlayersWithStatus();
 	useDocumentTitle(title);
 
@@ -115,17 +121,40 @@ const App: React.FC = () => {
 	return (
 		<HostPresenterLayout.Root>
 			<HostPresenterLayout.Header>
-				{started && (
-					<button
-						type="button"
-						className="km-btn-secondary"
-						onClick={handleShowInstructions}
-						aria-label={hostInstructionsButton}
-					>
-						<Info className="size-5" />
-						{hostInstructionsButton}
-					</button>
-				)}
+				<div className="flex gap-4">
+					{started && (
+						<button
+							type="button"
+							className="km-btn-secondary"
+							onClick={() => setShowRoles(!showRoles)}
+							aria-label={showRoles ? config.hideRolesButton : config.showRolesButton}
+						>
+							{showRoles ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+							{showRoles ? config.hideRolesButton : config.showRolesButton}
+						</button>
+					)}
+					{started && narrationSettings.enabled && (
+						<button
+							type="button"
+							className="km-btn-secondary"
+							onClick={() => setShowNarrationDrawer(true)}
+						>
+							<Sparkles className="size-5" />
+							{config.narrationDrawerButton}
+						</button>
+					)}
+					{started && (
+						<button
+							type="button"
+							className="km-btn-secondary"
+							onClick={handleShowInstructions}
+							aria-label={hostInstructionsButton}
+						>
+							<Info className="size-5" />
+							{hostInstructionsButton}
+						</button>
+					)}
+				</div>
 			</HostPresenterLayout.Header>
 
 			<HostPresenterLayout.Main>
@@ -157,7 +186,7 @@ const App: React.FC = () => {
 					{/* Player List with Roles */}
 					{started && playersWithStatus.players.length > 0 && (
 						<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-6">
-							<h2 className="text-xl font-bold text-slate-100 mb-4">Players</h2>
+							<h2 className="text-xl font-bold text-slate-100 mb-4">{config.playersLabel}</h2>
 							<div className="space-y-2">
 								{playersWithStatus.players.map((player) => (
 									<div
@@ -165,13 +194,15 @@ const App: React.FC = () => {
 										className="flex items-center justify-between rounded-lg bg-cult-dark p-3 border border-cult-red/20"
 									>
 										<div className="flex items-center gap-3">
-											<span className="text-2xl">{getRoleEmoji(player.role)}</span>
-											<div>
-												<p className="font-semibold text-slate-100">{player.name}</p>
+										{showRoles && <span className="text-2xl">{getRoleEmoji(player.role)}</span>}
+										<div>
+											<p className="font-semibold text-slate-100">{player.name}</p>
+											{showRoles && (
 												<p className="text-sm text-slate-400">
 													{getRoleName(player.role)}
 													{!player.isAlive && ' (Eliminated)'}
 												</p>
+											)}
 											</div>
 										</div>
 										<div className="flex items-center gap-2">
@@ -246,17 +277,17 @@ const App: React.FC = () => {
 							{gamePhase === 'day' && (
 								<div className="mt-4 space-y-4">
 									<div>
-											<p className="font-semibold text-slate-100">Day Votes: {dayVotes.length}</p>
-										<p className="text-sm">Validated: {dayVotes.filter(v => v.validated).length}</p>
-									</div>
-					
-					{hunterNeedsToChoose && (
-						<div className="rounded-lg bg-yellow-100 p-3 text-yellow-900">
-							<p className="font-semibold">⚠️ Waiting for Hunter to choose their target</p>
-						</div>
-					)}
+										<p className="font-semibold text-slate-100">{config.dayVotesLabel} {dayVotes.length}</p>
+									<p className="text-sm">{config.validatedLabel} {dayVotes.filter(v => v.validated).length}</p>
+								</div>
 
-					<div className="flex gap-2">
+								{hunterNeedsToChoose && (
+									<div className="rounded-lg bg-yellow-100 p-3 text-yellow-900">
+										<p className="font-semibold">{config.waitingForHunterMessage}</p>
+									</div>
+								)}
+
+								<div className="flex gap-2">
 						<button
 							type="button"
 								className="flex-1 inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-blue-600 not-disabled:text-white not-disabled:hover:bg-blue-700"
@@ -300,7 +331,7 @@ const App: React.FC = () => {
 						<button
 							type="button"
 							className="inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-green-600 not-disabled:text-white not-disabled:hover:bg-green-700"
-							onClick={globalActions.startGame}
+							onClick={() => setShowNarrationModal(true)}
 							disabled={buttonCooldown || Object.keys(players).length < 3}
 						>
 							<CirclePlay className="size-5" />
@@ -322,7 +353,7 @@ const App: React.FC = () => {
 							<button
 								type="button"
 								className="inline-flex items-center justify-center gap-3 rounded-xl px-5 py-3 font-medium transition-colors not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:opacity-50 not-disabled:bg-blue-600 not-disabled:text-white not-disabled:hover:bg-blue-700"
-								onClick={globalActions.restartGame}
+								onClick={() => setShowNarrationModal(true)}
 								disabled={buttonCooldown}
 							>
 								<RotateCcw className="size-5" />
@@ -362,6 +393,26 @@ const App: React.FC = () => {
 					</a>
 				</div>
 			</HostPresenterLayout.Footer>
+
+			{/* Narration Settings Modal */}
+			<NarrationSettingsModal
+				isOpen={showNarrationModal}
+				onClose={() => setShowNarrationModal(false)}
+				onStartGame={() => {
+					setShowNarrationModal(false);
+					if (started) {
+						globalActions.restartGame();
+					} else {
+						globalActions.startGame();
+					}
+				}}
+			/>
+
+			{/* Narration Drawer */}
+			<NarrationDrawer
+				isOpen={showNarrationDrawer}
+				onClose={() => setShowNarrationDrawer(false)}
+			/>
 		</HostPresenterLayout.Root>
 	);
 };

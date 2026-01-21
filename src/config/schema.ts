@@ -49,6 +49,9 @@ export const schema = z.object({
 	voteRecorded: z.string().default('✓ Vote Recorded'),
 	cultistsAgreeWarning: z.string().default('Agree on one person!!'),
 	sacrificeRandomMessage: z.string().default('The votes were tied. The victim was chosen randomly.'),
+	yourInvestigationsLabel: z.string().default('Your Investigations:'),
+	yourFellowCultistsLabel: z.string().default('Your Fellow Cultists:'),
+	voteIndicator: z.string().default('🗳️'),
 	
 	// Day Phase
 	dayPhaseTitle: z.string().default('Day Breaks'),
@@ -70,7 +73,12 @@ export const schema = z.object({
 	gameOverTitle: z.string().default('Game Over'),
 	cultistsWin: z.string().default('Cultists Win!'),
 	villagersWin: z.string().default('Villagers Win!'),
-	theCultistsWere: z.string().default('The cultists were:'),	awaitingNewRitual: z.string().default('Awaiting the host to begin a new ritual...'),	
+	theCultistsWere: z.string().default('The cultists were:'),
+	hostEndedGameMessage: z.string().default('The host ended the game. No winner was declared.'),
+	hostEndedGamePlayerMessage: z
+		.string()
+		.default('The host ended the game. No winner was declared.'),
+	awaitingNewRitual: z.string().default('Awaiting the host to begin a new ritual...'),	
 	// Cultist thresholds
 	oneCultistsMaxPlayers: z.number().int().min(4).default(7),
 	twoCultistsMaxPlayers: z.number().int().min(5).default(11),
@@ -119,6 +127,21 @@ export const schema = z.object({
 	startDayPhaseButton: z.string().default('Start Day Phase'),
 	startNightPhaseButton: z.string().default('Start Night Phase'),
 	validateAllVotesButton: z.string().default('Validate All Votes'),
+	showRolesButton: z.string().default('Show roles'),
+	hideRolesButton: z.string().default('Hide roles'),
+	playersLabel: z.string().default('Players'),
+	eliminatedLabel: z.string().default('(Eliminated)'),
+	dayVotesLabel: z.string().default('Day Votes:'),
+	validatedLabel: z.string().default('Validated:'),
+	waitingForHunterMessage: z.string().default('⚠️ Waiting for Hunter to choose their target'),
+	
+	// Presenter
+	nightPhasePresenterTitle: z.string().default('NIGHT PHASE'),
+	dayPhasePresenterTitle: z.string().default('DAY PHASE'),
+	roundLabel: z.string().default('Round'),
+	eliminatedPlayersLabel: z.string().default('Eliminated Players'),
+	publicVotingLabel: z.string().default('Public Voting'),
+	noVotesYet: z.string().default('No votes yet...'),
 	
 	playerLinkLabel: z.string().default('Player Link'),
 	presenterLinkLabel: z.string().default('Presenter Link'),
@@ -141,7 +164,34 @@ export const schema = z.object({
 	playerNameButton: z.string().default('Continue'),
 	
 	// Waiting for game
-	waitingForGameMd: z.string().default('# The ritual has already begun\\n\\nPlease wait for the current ritual to conclude before joining the congregation.')
+	waitingForGameMd: z.string().default('# The ritual has already begun\\n\\nPlease wait for the current ritual to conclude before joining the congregation.'),
+	
+	// Narration Settings
+	narrationSettingsTitle: z.string().default('AI Narration'),
+	narrationSettingsDescription: z.string().default('Generate dramatic narration text for each phase of the game. Perfect for hosts who want to role-play as a storyteller.'),
+	enableNarrationLabel: z.string().default('Enable AI Narration'),
+	villageNameLabel: z.string().default('Village Name'),
+	villageNamePlaceholder: z.string().default('e.g., Ravenholm, Gordes...'),
+	cultNameLabel: z.string().default('Cult Name'),
+	cultNamePlaceholder: z.string().default('e.g., The Crimson Order, Children of the Flame...'),
+	narrationToneLabel: z.string().default('Narration Tone'),
+	narrationToneDark: z.string().default('Dark'),
+	narrationToneHumorous: z.string().default('Humorous'),
+	narrationToneNeutral: z.string().default('Neutral'),
+	narrationLengthLabel: z.string().default('Narration Length'),
+	narrationLengthShort: z.string().default('Short (~50 words)'),
+	narrationLengthLong: z.string().default('Long (~120 words)'),
+	narrationLanguageLabel: z.string().default('Language'),
+	startWithNarrationButton: z.string().default('Start Game with Narration'),
+	startWithoutNarrationButton: z.string().default('Start Game'),
+	narrationDrawerTitle: z.string().default('Narration Script'),
+	narrationDrawerButton: z.string().default('Narration'),
+	generateNarrationButton: z.string().default('Generate Narration'),
+	regenerateNarrationButton: z.string().default('Regenerate'),
+	regenerationUsedLabel: z.string().default('already used'),
+	generatingNarrationMessage: z.string().default('Generating narration...'),
+	noNarrationMessage: z.string().default('No narration generated yet.'),
+	narrationDisabledMessage: z.string().default('AI narration is not enabled for this game.')
 }).refine(
 	(data) => {
 		if (data.oneCultistsMaxPlayers >= data.twoCultistsMaxPlayers) {
