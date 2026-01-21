@@ -1,9 +1,47 @@
 import { config } from '@/config';
+import { usePlayersWithStatus } from '@/hooks/usePlayersWithStatus';
 import { globalActions } from '@/state/actions/global-actions';
 import { globalStore, type NarrationTone, type NarrationLength } from '@/state/stores/global-store';
 import { useSnapshot } from '@kokimoki/app';
-import { Sparkles, X } from 'lucide-react';
+import { Sparkles, X, Users } from 'lucide-react';
 import * as React from 'react';
+
+// Connected players list component
+const ConnectedPlayersList: React.FC = () => {
+	const { players } = usePlayersWithStatus();
+	const onlinePlayers = players.filter(p => p.isOnline);
+
+	if (onlinePlayers.length === 0) {
+		return (
+			<div className="px-6 pb-6">
+				<div className="flex items-center gap-2 text-slate-400 text-sm">
+					<Users className="size-4" />
+					<span>No players connected yet</span>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className="px-6 pb-6">
+			<div className="flex items-center gap-2 text-slate-300 text-sm mb-2">
+				<Users className="size-4" />
+				<span>{onlinePlayers.length} {onlinePlayers.length === 1 ? 'player' : 'players'} connected</span>
+			</div>
+			<div className="flex flex-wrap gap-2">
+				{onlinePlayers.map((player) => (
+					<span
+						key={player.id}
+						className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cult-dark text-slate-200 text-sm border border-cult-red/20"
+					>
+						<span className="w-2 h-2 rounded-full bg-green-500" />
+						{player.name}
+					</span>
+				))}
+			</div>
+		</div>
+	);
+};
 
 interface NarrationSettingsModalProps {
 	isOpen: boolean;
@@ -63,14 +101,14 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 	};
 
 	const toneOptions: { value: NarrationTone; label: string }[] = [
-		{ value: 'dark', label: config.narrationToneDark },
-		{ value: 'humorous', label: config.narrationToneHumorous },
-		{ value: 'neutral', label: config.narrationToneNeutral }
+		{ value: 'dark', label: config.narrationTone1 },
+		{ value: 'humorous', label: config.narrationTone2 },
+		{ value: 'neutral', label: config.narrationTone3 }
 	];
 
 	const lengthOptions: { value: NarrationLength; label: string }[] = [
-		{ value: 'short', label: config.narrationLengthShort },
-		{ value: 'long', label: config.narrationLengthLong }
+		{ value: 'short', label: config.narrationLengthShortLabel.replace('{count}', config.narrationLengthShort.toString()) },
+		{ value: 'long', label: config.narrationLengthLongLabel.replace('{count}', config.narrationLengthLong.toString()) }
 	];
 
 	return (
@@ -227,6 +265,9 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 						</button>
 					)}
 				</div>
+
+				{/* Connected Players */}
+				<ConnectedPlayersList />
 			</div>
 		</div>
 	);

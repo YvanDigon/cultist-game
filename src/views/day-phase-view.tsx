@@ -39,6 +39,11 @@ export const DayPhaseView: React.FC = () => {
 		return true;
 	});
 
+	// Count alive cultists
+	const aliveCultistsCount = Object.values(players).filter(
+		player => player.isAlive && player.role === 'cultist'
+	).length;
+
 	const handleVote = async (targetId: string) => {
 		await globalActions.submitDayVote(targetId);
 	};
@@ -171,6 +176,9 @@ export const DayPhaseView: React.FC = () => {
 
 			<div className="rounded-xl bg-cult-blue border border-cult-red/30 p-4 text-slate-50">
 				<p className="text-center font-semibold">{config.voteToExecute}</p>
+				<p className="text-center text-lg mt-2">
+					{config.cultistsLeftLabel} {'🦹'.repeat(aliveCultistsCount)}
+				</p>
 			</div>
 
 			<div className="space-y-2">

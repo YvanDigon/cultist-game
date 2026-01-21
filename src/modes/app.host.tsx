@@ -38,6 +38,7 @@ const App: React.FC = () => {
 	const [showRoles, setShowRoles] = React.useState(true);
 	const [showNarrationModal, setShowNarrationModal] = React.useState(false);
 	const [showNarrationDrawer, setShowNarrationDrawer] = React.useState(false);
+	const [narrationUnread, setNarrationUnread] = React.useState(false);
 	const playersWithStatus = usePlayersWithStatus();
 	useDocumentTitle(title);
 
@@ -50,6 +51,13 @@ const App: React.FC = () => {
 
 		return () => clearTimeout(timeout);
 	}, [started]);
+
+	// Mark narration as unread when phase or round changes
+	React.useEffect(() => {
+		if (started && narrationSettings.enabled && gamePhase !== 'lobby') {
+			setNarrationUnread(true);
+		}
+	}, [started, narrationSettings.enabled, gamePhase, roundNumber]);
 
 	const handleShowInstructions = () => {
 		openDrawer({
@@ -136,8 +144,11 @@ const App: React.FC = () => {
 					{started && narrationSettings.enabled && (
 						<button
 							type="button"
-							className="km-btn-secondary"
-							onClick={() => setShowNarrationDrawer(true)}
+							className={narrationUnread ? "km-btn-primary animate-pulse" : "km-btn-secondary"}
+							onClick={() => {
+								setShowNarrationDrawer(true);
+								setNarrationUnread(false);
+							}}
 						>
 							<Sparkles className="size-5" />
 							{config.narrationDrawerButton}
