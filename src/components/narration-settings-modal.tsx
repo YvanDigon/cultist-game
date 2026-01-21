@@ -207,7 +207,7 @@ export const NarrationSettingsModal: React.FC<NarrationSettingsModalProps> = ({
 							{/* Length Selection */}
 							<div>
 								<label className="block text-sm font-medium text-slate-300 mb-2">
-									{config.narrationLengthLabel}
+								Narration Length
 								</label>
 								<div className="flex gap-2">
 									{lengthOptions.map((option) => (

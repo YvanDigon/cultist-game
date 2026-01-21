@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-01-21
+
+### Added
+- Connected players list in narration settings modal to verify all players are present before starting
+- Cultists remaining count display on player day phase screen (shows number of alive cultists with emoji indicators)
+- Visual notification on narration button when new phase narration is available (pulsing red highlight)
+
+### Changed
+- Narration length labels now dynamically display actual word count from configuration
+- Narration button automatically marks as read when host opens the narration drawer
+
 ## [0.1.4] - 2026-01-21
 
 ### Added
